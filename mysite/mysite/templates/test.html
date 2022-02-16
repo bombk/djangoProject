@@ -1,0 +1,50 @@
+<html>
+<head>
+    <title>{{title}}</title>
+    <style>
+        .main{
+            width: 1000px;
+            background-color: red;
+            color: white;
+            padding: 20px;
+            font-size: 30px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    {% for n in clist%}
+    <div>{{forloop.revcounter}} {{n}}</div>
+    {% endfor %}
+
+    <br/>
+    <table border='1' cellpadding=10>
+        <tr>
+            <th>Name</th>
+            <th>Phone Number</th>
+
+        </tr>
+        {%for d in student_details%}
+
+        <tr>
+            <td>{{d.name}}</td>
+            <td>{{d.phone}}</td>
+        </tr>
+
+        {% endfor %}
+
+    </table>
+    {% if number|length > 0 %}
+    {% for num in number %}
+        {% if num > 5 %}
+            <div>{{num}}<div>
+        {% endif %}
+    
+    {% endfor %}
+    {% else %}
+    No data found
+    {% endif %}
+</body>
+</html>

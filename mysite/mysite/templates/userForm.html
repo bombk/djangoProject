@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>User Form</h1>
+
+<form method="POST">
+    {% csrf_token %}
+    <label>First Number</label>
+    <input type=number name="num1" placeholder="Enter first number">
+    <br/>
+    <label>Second Number</label>
+    <input type=number name="num2" placeholder="Enter second Number">
+    <br/>
+    <button type='submit'>Send</button>
+    <br/>
+<br/>
+<label>Result</label>
+<input type=text value="{{output}}">
+
+   
+</form>
+
+
+{% endblock %}
