@@ -1,0 +1,49 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form method="get" >
+    {% csrf_token %}
+
+    <input type="text" name="servicename" placeholder="Search" value=""/>
+    <input type="submit" value="Search"/>
+</form>
+{% for n in serviceData %}
+    {{forloop.counter}}
+    {{n.service_icon}}
+    {{n.service_title}}
+    {{n.service_des | safe}}
+    <br/>
+{% empty %}
+No data Found
+
+{% endfor %}
+
+<nav aria-label="...">
+    <ul class="pagination">
+        {% if serviceData.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="/services/?page=1" tabindex="-1">First</a>
+          </li>
+      <li class="page-item">
+        <a class="page-link" href="/services/?page={{serviceData.previous_page_number}}" tabindex="-1">Previous</a>
+      </li>
+      {% endif %}
+
+      {% for n in totalPageList %}
+      <li class="page-item"><a class="page-link" href="/services/?page={{n}}">{{n}}</a></li>
+      {% endfor %}
+
+      {% if serviceData.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="/services/?page={{serviceData.next_page_number}}">Next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="/services/?page={{lastPage}}" tabindex="-1">Last</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+{% endblock %}

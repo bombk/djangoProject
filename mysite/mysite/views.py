@@ -3,17 +3,58 @@ import imp
 from django.http import HttpResponse
 from django.shortcuts import render
 from service.models import Service
+from news.models import News
+from django.core.paginator import Paginator
 
 def homePage(request):
-    serviceData=Service.objects.all()
+    serviceData=Service.objects.all().order_by('-service_title')[:2]
+    newsData=News.objects.all()
+
     #for a in serviceData:
         #print(a)
         #print(a.service_icon)
     data={
-        'serviceData':serviceData
+        'serviceData':serviceData,
+        'newsData':newsData,
     }
 
     return render(request,"index.html",data)
+
+def newsDetails(request,slug):
+    newsDetails=News.objects.get(news_slug=slug)
+    data={
+        'newsDetails':newsDetails
+
+    }
+    return render(request,"newsDetails.html",data)
+
+def services(request):
+    serviceData=Service.objects.all().order_by('service_title')
+
+    #for a in serviceData:
+        #print(a)
+        #print(a.service_icon)
+    if request.method=="GET":
+         st=request.GET.get('servicename')
+         if st!=None:
+             #serviceData=Service.objects.filter(service_title=st) #this filter exact match
+             serviceData=Service.objects.filter(service_title__icontains=st) ##filter data with any same character or word
+
+
+
+    paginator=Paginator(serviceData,2)
+    page_number=request.GET.get('page')
+    serviceDatafinal=paginator.get_page(page_number)
+    totalPages=serviceDatafinal.paginator.num_pages ##num_pages give totalpage count
+
+    
+    data={
+        #'serviceData':serviceData,  #this display all data
+        'serviceData':serviceDatafinal, ##this limit data show only 2 with paginator...
+        'lastPage':totalPages,
+        'totalPageList':[n+1 for n in range(totalPages)],
+    }
+    return render(request,'services.html',data)
 
 def contact(request):
     return render(request,"contact.html")

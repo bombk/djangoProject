@@ -27,7 +27,12 @@ urlpatterns = [
     path('calculator/',views.calculator),
     path('oddeven/',views.oddeven),
     path('marksheet/',views.marksheet),
+    path('services/',views.services,name='services'),
 
+    #path('newsdetails/<newsId>',views.newsDetails), sending data from slug instead of id
+    path('newsdetails/<slug>',views.newsDetails),
+
+    
     #path('contact/<int:intId>',views.int),
     #path('contact/<str:stringId>',views.string),
     path('contact/<slug:slugId>',views.slug),

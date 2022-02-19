@@ -2,6 +2,14 @@
 
 {% block content %}
 
+<marquee onmouseover="stop()" oumouseout="start()">
+    {% for news in newsData %}
+
+   <a href='newsdetails/{{news.news_slug}}'> {{news.news_title}} </a>&nbsp;&nbsp;&nbsp;&nbsp;
+    
+    {% endfor %}
+</marquee>
+
 <h1> This is home page</h1>
 <p>
 
@@ -23,7 +31,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
     {{forloop.counter}}
     {{n.service_icon}}
     {{n.service_title}}
-    {{n.service_des}}
+    {{n.service_des | upper}}
     <br/>
 
 
