@@ -1,8 +1,9 @@
 from curses.ascii import HT
 import imp
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from service.models import Service
+from contactenquiry.models import contactEnquiry
 from news.models import News
 from django.core.paginator import Paginator
 
@@ -58,6 +59,20 @@ def services(request):
 
 def contact(request):
     return render(request,"contact.html")
+
+def saveEnquiry(request):
+    m=''
+    if request.method=='POST':
+        name1=request.POST.get('name')
+        email1=request.POST.get('email')
+        phone1=request.POST.get('phone')
+        websiteLink1=request.POST.get('websiteLink')
+        message1=request.POST.get('message')
+        en=contactEnquiry(name=name1,email=email1,phone=phone1,websiteLink=websiteLink1,message=message1) ##get all data in modelClass
+        en.save()
+        m="Data Insert Sucessfully"
+     
+    return render(request,"contact.html",{'m':m})
 
 def about(request):
     return render(request,"about.html")
