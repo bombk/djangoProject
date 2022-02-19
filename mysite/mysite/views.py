@@ -2,12 +2,14 @@ from curses.ascii import HT
 import imp
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from service.models import Service
-from contactenquiry.models import contactEnquiry
-from news.models import News
-from django.core.paginator import Paginator
+from service.models import Service #model colass
+from contactenquiry.models import contactEnquiry #model class
+from news.models import News #model class
+from django.core.paginator import Paginator #paginator
+from django.core.mail import send_mail ,EmailMultiAlternatives   # mail send 
 
 def homePage(request):
+    ##fetching data from database
     serviceData=Service.objects.all().order_by('-service_title')[:2]
     newsData=News.objects.all()
 
@@ -58,6 +60,7 @@ def services(request):
     return render(request,'services.html',data)
 
 def contact(request):
+
     return render(request,"contact.html")
 
 def saveEnquiry(request):
@@ -75,6 +78,24 @@ def saveEnquiry(request):
     return render(request,"contact.html",{'m':m})
 
 def about(request):
+     ##send simple mail
+    send_mail(
+        'Testing mail',
+        'Here is your message',
+        'bomncit@gmail.com',
+        ['bombdrbk21@gmail.com'],
+        fail_silently=False,
+    )
+
+    ##send mail with html content
+    subject='Testing HTML Mail'
+    from_email='bomncit@gmail.com'
+    to='bombdrbk21@gmail.com'
+    msg='<h1>This is <b>HTML</b> Mail </h1>'
+    msg=EmailMultiAlternatives(subject,msg,from_email,[to])
+    msg.content_subtype='html'
+    msg.send()
+    
     return render(request,"about.html")
 
 def form(request):

@@ -124,7 +124,18 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+MEDIA_ROOT=BASE_DIR /"media"
+
+MEDIA_URL="/media/"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+##send mail from python
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='bomncit@gmail.com'
+EMAIL_HOST_PASSWORD='Bom@12345'
+EMAIL_USE_TLS=True
